@@ -1,0 +1,16 @@
+{
+  "name": "postcard_mailer",
+  "version": "1.0.0",
+  "description": "basic mailer test + payment via Stripe",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.13.4",
+    "lob": "^3.7.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "dima strakovsky",
+  "license": "ISC"
+}
