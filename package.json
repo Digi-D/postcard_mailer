@@ -4,7 +4,9 @@
   "description": "Basic mailer test via Lob + payment via Stripe",
   "main": "app.js",
   "dependencies": {
+    "body-parser": "^1.14.2",
     "express": "^4.13.4",
+    "express-handlebars": "^3.0.0",
     "lob": "^3.7.0",
     "stripe": "^4.3.0"
   },
