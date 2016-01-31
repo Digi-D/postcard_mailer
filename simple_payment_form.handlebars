@@ -25,14 +25,14 @@
           <label>Email :</label>
           <input type="text" name="email" id="email" placeholder="Valid Email" />
           <label>Amount :</label>
-          <input type="number" step="0.01" name="amount donating" id="amount" placeholder="Amount of Donation" />
+          <input type="number" step="0.01" name="amount donating" id="amount" placeholder="Amount of Payment" />
           <button id="submitButton">Submit Info</button>
         </form>
 
         <script>
 
           var user_email='';
-          var user_donation=0;
+          var user_payment=0;
 
           var call_2_Stripe = StripeCheckout.configure({
             key: '{{stripe_key}}',
@@ -44,7 +44,7 @@
                 type: 'post',
                 dataType: 'json',
                 contentType: 'application/json;charset=utf-8',
-                data: JSON.stringify({tokenid: token.id, email: token.email, donationAmt: user_donation}),
+                data: JSON.stringify({tokenid: token.id, email: token.email, payment_amount: user_payment}),
                 success: function(data) {
                   console.log(data);
                   //on success post the whole form to the server
@@ -63,15 +63,15 @@
           $('#submitButton').on('click', function(e) {
 
             user_email = $("#email").val();
-            user_donation = $("#amount").val();
-            user_donation=parseFloat(user_donation)*100; //stripe prices are in cents
+            user_payment = $("#amount").val();
+            user_payment=parseFloat(user_payment)*100; //stripe prices are in cents
 
             call_2_Stripe.open({
               name: 'My Test App',
               description: 'Thank you!',
               email: user_email,
               allowRememberMe: false,
-              amount: user_donation
+              amount: user_payment
             });
             e.preventDefault();
           });

@@ -19,8 +19,24 @@ app.get('/', function (req, res) {
 })
 
 app.post('/finalize_payment', json_parser, function (req, res) {
-  console.log(req.body.tokenid);
+  console.log(req.body.tokenid+" "+req.body.payment_amount +" "+req.body.email);
   res.end('polo');
+
+  var charge = stripe.charges.create({
+      amount: req.body.payment_amount ,
+      currency: "usd",
+      source: req.body.tokenid,
+      receipt_email: req.body.email
+    },function(err, charge) {
+      if (err && err.type === 'StripeCardError') {
+        // The card has been declined
+      }
+      else {
+        console.log(charge);
+      }
+    }
+  );
+
   //console.log(req);
 })
 
