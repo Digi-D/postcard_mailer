@@ -1,7 +1,7 @@
 //testing Stripe Functionality
 
 var fs = require('fs');
-eval(fs.readFileSync('./my_keys.js').toString()); //throw your keys here
+eval(fs.readFileSync('./my_keys.js').toString()); //change to dot env
 var express = require('express');
 var hbars = require('express-handlebars');
 var bodyParser = require('body-parser');
@@ -20,7 +20,7 @@ app.get('/', function (req, res) {
 
 app.post('/finalize_payment', json_parser, function (req, res) {
   console.log(req.body.tokenid+" "+req.body.payment_amount +" "+req.body.email);
-  res.end('polo');
+  res.end('{"status": "success"}');
 
   var charge = stripe.charges.create({
       amount: req.body.payment_amount ,
