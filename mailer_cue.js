@@ -6,9 +6,14 @@ var events = require('events');
 var bunyan = require('bunyan');
 
 var eventEmitter = new events.EventEmitter();
-var log = bunyan.createLogger({name: "mailer_status"});
+var log = bunyan.createLogger({
+  name: "mailer_status",
+  streams: [{
+      path: './log.json',
+  }]
+});
 
-log.info("heelo");
+log.info("Server Startup");
 
 var serialCue = {
   init:function(new_job){

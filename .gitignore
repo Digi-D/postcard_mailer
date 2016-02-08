@@ -2,3 +2,4 @@ production_test_mailer.js
 .DS_Store
 node_modules/
 my_keys.js
+log.json
