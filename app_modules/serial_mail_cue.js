@@ -1,9 +1,12 @@
+//wraps around lob.com create card call to order multiple cards
+//the API is not able to do this out of the box and I don't want to hammer their servers
+//so all the requests are put into a cue and executed one after another
+//each iteration over a cue member is reported back to app.js and logged there
+
+
+var config = require('./config.js'); //throw your keys here
+var Lob = require('lob')(config.TEST_LOB_KEY);
 var fs = fs = require('fs');
-var MY_KEYS = require('./my_keys.js'); //throw your keys here
-var Lob = require('lob')(MY_KEYS.TEST_LOB_KEY);
-var uuid = require('uuid');
-var events = require('events');
-var bunyan = require('bunyan');
 
 
 var serialCue = {
@@ -28,7 +31,7 @@ var serialCue = {
   renderCard:function(){
     console.log(this.new_job.send_to.name + " "+this.job_counter+" of "+this.new_job.number_of_cards);
     Lob.postcards.create({
-      description: 'Demo Postcard job4',
+      description: this.new_job.description,
       to: {
         name: this.new_job.send_to.name,
         address_line1: this.new_job.send_to.address,
@@ -37,7 +40,7 @@ var serialCue = {
         address_zip: this.new_job.send_to.zip
       },
       //skipping "from" attribute
-      front: fs.readFileSync('./media/LOB_template.png'),
+      front: fs.readFileSync('../media/LOB_template.png'),
       back: '<html style="padding-left:0.3in;padding-top:0.5in"><div style="font-size:0.3in">The International</div><div style="font-size:15px;padding-top:0.1in; padding-left:0.2in;font-family:sans-serif;">infinite.industries/the-international</div></html>',
     }, function (err, res) {
         if(err){

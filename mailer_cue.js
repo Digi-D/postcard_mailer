@@ -1,13 +1,9 @@
-var fs = fs = require('fs');
-var MY_KEYS = require('./my_keys.js'); //throw your keys here
-var Lob = require('lob')(MY_KEYS.TEST_LOB_KEY);
 var uuid = require('uuid');
-var events = require('events');
 var bunyan = require('bunyan');
 
+var comBus = require('./app_modules/com.js');
 var sendCards = require('./app_modules/serial_mail_cue.js');
 
-var eventEmitter = new events.EventEmitter();
 var log = bunyan.createLogger({
   name: "mailer_status",
   streams: [{
@@ -31,6 +27,7 @@ var cardShipment ={
     zip:'40502',
   },
   email:"dima@dima.com",
+  description:"strange new card",
   number_of_cards:number_of_cards,
   shipment_id:shipment_id,
 };
@@ -40,7 +37,9 @@ var cardShipment ={
 
 //Iterate through the shipping cue one item at a time :(
 //var sendCards = Object.create(serialCue);
-sendCards.init(cardShipment);
+8979876111sendCards.init(cardShipment);
+
+com_broker.initListener('testing', pipeMe);
 eventEmitter.on('success', function(){
   console.log("succeded");
   sendCards.eachIteration();
