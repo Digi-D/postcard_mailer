@@ -8,6 +8,12 @@ module.exports =
   'TEST_STRIPE_PUBLISHABLE_KEY':'pk_test_AnN5EyTAXijWCz9NbgpDpGX4',
   'PROD_STRIPE_SECRET_KEY':'0',
   'PROD_STRIPE_PUBLISHABLE_KEY':'0',
-  
+
   //MANDRILL KEYS
+
+  //SERVER ADDRESSES
+  'production_server_ip':'162.243.242.60',
+  'staging_server_ip':'0.0.0.0'
 }
+
+//deploydepl0y
