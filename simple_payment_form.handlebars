@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+    <head>
+          <meta charset="utf-8">
+          <meta http-equiv="x-ua-compatible" content="ie=edge">
+          <title>Test Stripe Checkout</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+
+          <script src="https://checkout.stripe.com/checkout.js"></script>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+          <!-- NOTES:
+          http://stackoverflow.com/questions/22445078/how-to-create-a-stripe-charge-with-a-checkout-token-sent-via-ajax-to-php
+          https://stripe.com/docs/testing
+          -->
+    </head>
+    <body>
+
+
+        <!-- Grab email and donation amount fields -->
+        <form action="#" method="post" name="test_form" id="test_form_id">
+          <h2>Testing Name and Email and $Amount</h2>
+          <label>Name :</label>
+          <input type="text" name="name" id="name" placeholder="Name" />
+          <label>Email :</label>
+          <input type="text" name="email" id="email" placeholder="Valid Email" />
+          <label>Amount :</label>
+          <input type="number" step="0.01" name="amount donating" id="amount" placeholder="Amount of Payment" />
+          <button id="submitButton">Submit Info</button>
+        </form>
+
+        <script>
+
+          var user_email='';
+          var user_payment=0;
+
+          var call_2_Stripe = StripeCheckout.configure({
+            key: '{{stripe_key}}',
+            locale: 'auto',
+            token: function(token) {
+              console.log(token);
+              $.ajax({
+                url: '/finalize_payment',
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json;charset=utf-8',
+                data: JSON.stringify({tokenid: token.id, email: token.email, payment_amount: user_payment}),
+                success: function(data) {
+                  console.log(data);
+                  //on success post the whole form to the server
+                  var user_name = $("#name").val();
+                  console.log(user_name);
+                  //http://stackoverflow.com/questions/3513971/page-redirect-with-successful-ajax-request
+                },
+                error: function(data) {
+                  console.log("Ajax Error!");
+                  console.log(data);
+                }
+              });
+            }
+          });
+
+          $('#submitButton').on('click', function(e) {
+
+            user_email = $("#email").val();
+            user_payment = $("#amount").val();
+            user_payment=parseFloat(user_payment)*100; //stripe prices are in cents
+
+            call_2_Stripe.open({
+              name: 'My Test App',
+              description: 'Thank you!',
+              email: user_email,
+              allowRememberMe: false,
+              amount: user_payment
+            });
+            e.preventDefault();
+          });
+
+          // Close Checkout on page navigation
+          $(window).on('popstate', function() {
+            handler.close();
+          });
+        </script>
+
+
+      </body>
+    </html>

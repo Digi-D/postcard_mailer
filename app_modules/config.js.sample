@@ -1,0 +1,13 @@
+//all configuration settings and keys
+module.exports =
+{
+  'TEST_LOB_KEY':'0',
+  'PROD_LOB_KEY':'0',
+
+  'TEST_STRIPE_SECRET_KEY':'0',
+  'TEST_STRIPE_PUBLISHABLE_KEY':'0',
+  'PROD_STRIPE_SECRET_KEY':'0',
+  'PROD_STRIPE_PUBLISHABLE_KEY':'0',
+  
+  //MANDRILL KEYS
+}

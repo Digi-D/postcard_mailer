@@ -1,12 +1,22 @@
 {
   "name": "postcard_mailer",
   "version": "1.0.0",
-  "description": "basic mailer test + payment via Stripe",
+  "description": "Basic mailer test via Lob + payment via Stripe",
   "main": "app.js",
   "dependencies": {
+    "body-parser": "^1.14.2",
+    "bunyan": "^1.5.1",
     "express": "^4.13.4",
     "flightplan": "^0.6.9",
-    "lob": "^3.7.0"
+    "lob": "^3.7.0",
+    "express-handlebars": "^3.0.0",
+    "lob": "^3.7.0",
+    "stripe": "^4.3.0",
+    "uuid": "^2.0.1",
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Digi-D/postcard_mailer.git"
   },
   "devDependencies": {
     "fly": "^0.8.8"

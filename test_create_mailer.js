@@ -2,8 +2,10 @@
 //https://lob.com/docs
 //https://github.com/lob/lob-node
 
-var Lob = require('lob')('test_721a627a37b16853eb3dc464c93834fedfb');
-var fs = fs = require('fs');
+var fs = require('fs');
+eval(fs.readFileSync('./my_keys.js').toString()); //throw your keys here
+var Lob = require('lob')(TEST_LOB_KEY);
+
 
 Lob.postcards.create({
   description: 'Demo Postcard job4',
