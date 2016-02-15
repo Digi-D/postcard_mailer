@@ -15,8 +15,6 @@ module.exports =
   'production_server_ip':'162.243.242.60',
   'staging_server_ip':'0.0.0.0',
 
-  //ANALYTICS SERVICES
-  'google_analytics_id':'UA-73795062-1'
 }
 
 //deploydepl0y
