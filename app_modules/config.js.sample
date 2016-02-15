@@ -8,6 +8,13 @@ module.exports =
   'TEST_STRIPE_PUBLISHABLE_KEY':'0',
   'PROD_STRIPE_SECRET_KEY':'0',
   'PROD_STRIPE_PUBLISHABLE_KEY':'0',
-  
+
   //MANDRILL KEYS
+
+  //SERVER ADDRESSES
+  'production_server_ip':'0.0.0.0',
+  'staging_server_ip':'0.0.0.0',
+
+  //ANALYTICS SERVICES
+  'google_analytics_id':'0'
 }
