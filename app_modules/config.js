@@ -15,6 +15,8 @@ module.exports =
   'production_server_ip':'162.243.242.60',
   'staging_server_ip':'0.0.0.0',
 
+  //PRICE OF A SINGLE CARD
+  'PRICE_PER_CARD': 2.00    //dollar number
 }
 
 //deploydepl0y

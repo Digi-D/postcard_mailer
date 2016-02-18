@@ -1,1 +1,24 @@
-<p>confirming ifnormation before send to {{visitor_info.name}}</p>
+{{#if params_valid}}<h3>Please confirm the following information before we begin sending the postcards</h3>
+ <div class="row">
+   <div class="col-sm-6">
+      <ul>
+        <li>{{visitor_info.first_name}} {{visitor_info.last_name}}</li>
+        <li>{{visitor_info.address_1}}</li>
+        {{#hide_if_empty visitor_info.address_2}}<li>{{visitor_info.address_2}}</li>{{/hide_if_empty}}
+        <li>{{visitor_info.city}}</li>
+        <li>{{visitor_info.state}}</li>
+        <li>{{visitor_info.zip}}</li>
+        <li>{{visitor_info.number_of_cards}}</li>
+      </ul>
+  </div>
+  <div class="col-sm-6">
+      FINAL PRICE: ${{visitor_info.price}}.00
+      <form action="#" method="post" name="test_form" id="test_form_id">
+      <button id="submitButton">Confirm and Send</button>
+  </div>
+</div>
+{{else}}
+<div class="jumbotron"> <h4>;(</h4> We are sorry. One or more values was not entered correctly.
+  Please return to the previous step and try again.
+</div>
+{{/if}}
