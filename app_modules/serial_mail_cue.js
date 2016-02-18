@@ -41,7 +41,7 @@ var serialCue = {
       },
       //skipping "from" attribute
       front: fs.readFileSync('../media/LOB_template.png'),
-      back: '<html style="padding-left:0.3in;padding-top:0.5in"><div style="font-size:0.3in">The International</div><div style="font-size:15px;padding-top:0.1in; padding-left:0.2in;font-family:sans-serif;">infinite.industries/the-international</div></html>',
+      back: '<html style="padding-left:0.3in;padding-top:0.5in"><div style="font-size:0.3in">The International</div><div style="font-size:15px;padding-top:0.1in; padding-left:0.2in;font-family:sans-serif;">the-international.infinite.industries</div></html>',
     }, function (err, res) {
         if(err){
           eventEmitter.emit('fail',err);

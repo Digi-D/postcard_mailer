@@ -4,6 +4,7 @@
       <ul>
         <li>{{visitor_info.first_name}} {{visitor_info.last_name}}</li>
         <li>{{visitor_info.address_1}}</li>
+        <li>{{visitor_info.email}}</li>
         {{#hide_if_empty visitor_info.address_2}}<li>{{visitor_info.address_2}}</li>{{/hide_if_empty}}
         <li>{{visitor_info.city}}</li>
         <li>{{visitor_info.state}}</li>
@@ -13,10 +14,58 @@
   </div>
   <div class="col-sm-6">
       FINAL PRICE: ${{visitor_info.price}}.00
-      <form action="#" method="post" name="test_form" id="test_form_id">
       <button id="submitButton">Confirm and Send</button>
   </div>
 </div>
+
+<script>
+  var user_email='';
+  var user_payment=0;
+
+  var call_2_Stripe = StripeCheckout.configure({
+    key: '{{stripe_key}}',
+    locale: 'auto',
+    token: function(token) {
+      console.log(token);
+      $.ajax({
+        url: '/finalize_payment',
+        type: 'post',
+        dataType: 'json',
+        contentType: 'application/json;charset=utf-8',
+        data: JSON.stringify({tokenid: token.id, email: token.email, payment_amount: user_payment}),
+        success: function(data) {
+          console.log(data);
+          //on success post the whole form to the server
+          //http://stackoverflow.com/questions/3513971/page-redirect-with-successful-ajax-request
+        },
+        error: function(data) {
+          console.log("Ajax Error!");
+          console.log(data);
+        }
+      });
+    }
+  });
+
+  $('#submitButton').on('click', function(e) {
+
+    user_email = "{{visitor_info.email}}";
+    user_payment=parseFloat({{visitor_info.price}})*100; //stripe prices are in cents
+
+    call_2_Stripe.open({
+      name: 'Postcards',
+      description: 'Thank you!',
+      email: user_email,
+      allowRememberMe: false,
+      amount: user_payment
+    });
+    e.preventDefault();
+  });
+
+  // Close Checkout on page navigation
+  $(window).on('popstate', function() {
+    handler.close();
+  });
+</script>
 {{else}}
 <div class="jumbotron"> <h4>;(</h4> We are sorry. One or more values was not entered correctly.
   Please return to the previous step and try again.

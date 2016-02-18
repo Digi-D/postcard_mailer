@@ -1,13 +1,17 @@
 //NEED TO: add decent design, installation shots from sites
 //Questions: How to validate address?
 var express = require('express');
-var app = express();
 var hbars = require('express-handlebars');
+var bodyParser = require('body-parser');
 
 var config = require('./app_modules/config.js');
 var validate = require('./app_modules/validate_form.js');
 var hbarsHelpers = require('./app_modules/helpers.js');
 
+var stripe = require("stripe")(config.TEST_STRIPE_SECRET_KEY);
+
+var app = express();
+var json_parser = bodyParser.json();
 
 app.engine('handlebars',
   hbars({
@@ -17,6 +21,7 @@ app.engine('handlebars',
 );
 app.set('view engine', 'handlebars');
 
+//ROUTES
 app.get('/', function (req, res) {
 // present the project and address/number of postcards to the viewers
    res.render( __dirname + "/views/" + "index" );
@@ -40,7 +45,7 @@ app.get('/get_visitor_info', function (req, res) {
     state:req.query.visitor_state,
     zip:req.query.visitor_zip,
     number_of_cards:req.query.number_of_cards,
-    price:0 //just a placeholder for now make this prettier!
+    price:0 //just a placeholder for now :( --> make this prettier!
   }
 
   validate.confirmationMessage(visitor_info, __dirname + "/views/" + "confirm", function(path, validation_state){
@@ -49,7 +54,29 @@ app.get('/get_visitor_info', function (req, res) {
 
 })
 
+app.post('/finalize_payment', json_parser, function (req, res) {
+  console.log(req.body.tokenid+" "+req.body.payment_amount +" "+req.body.email);
 
+  var charge = stripe.charges.create({
+      amount: req.body.payment_amount ,
+      currency: "usd",
+      source: req.body.tokenid,
+      receipt_email: req.body.email
+    },function(err, charge) {
+      if (err && err.type === 'StripeCardError') {
+        // The card has been declined
+      }
+      else {
+        console.log(charge);
+        console.log("begin sending cards");
+        
+        //res.end('{"status": "success"}');
+      }
+    }
+  );
+})
+
+//SERVER SETUP
 var server = app.listen(8081, function () {
 
   var host = server.address().address

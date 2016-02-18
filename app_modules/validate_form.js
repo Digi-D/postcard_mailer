@@ -1,3 +1,5 @@
+//validate the form
+//and pass the data to the handlebars template to render
 var validator = require('validator');
 var config = require('./config.js');
 
@@ -50,19 +52,14 @@ module.exports= {
       else {
         are_params_valid= false;
       }
-
-
-
-
-
     }
-
 
     callback(path_to_confirmation_view, {
       //pass all of the form inputs and validation state to
       //handlebars engine to render
       visitor_info:this.params_to_validate,
-      params_valid:are_params_valid
+      params_valid:are_params_valid,
+      stripe_key:config.TEST_STRIPE_PUBLISHABLE_KEY
     });
   },
 }
