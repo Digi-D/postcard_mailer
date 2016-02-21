@@ -1,39 +1,32 @@
 //NEED TO: add decent design, installation shots from sites
 //Questions: How to validate address?
+var config = require('./app_modules/config.js');
 var express = require('express');
 var hbars = require('express-handlebars');
 var bodyParser = require('body-parser');
 var uuid = require('uuid');
-var mandrill = require('mandrill-api/mandrill');
 
-var config = require('./app_modules/config.js');
+var mailgun = require('mailgun.js');
+var emailLibrary = require('./app_modules/transactional_email.js');
+var mg = mailgun.client({username: 'api', key: config.MAILGUN_API_KEY});
+var mail_domain = config.MAILGUN_DOMAIN;
+
 var validate = require('./app_modules/validate_form.js');
 //var mailCue = require('./app_modules/mail_cue.js');
 var hbarsHelpers = require('./app_modules/helpers.js');
 
 var stripe = require("stripe")(config.TEST_STRIPE_SECRET_KEY);
-var mandrill_client = new mandrill.Mandrill(config.MANDRILL_KEY);
+//var mailgun = require('mailgun-js')({apiKey: config.MAILGUN_API_KEY, domain: config.MAILGUN_DOMAIN});
 
 var app = express();
 var json_parser = bodyParser.json();
 
-var mailgun = require('mailgun-js')({apiKey: config.MAILGUN_API_KEY, domain: config.MAILGUN_DOMAIN});
 
-var data = {
-  from: 'INFINITE.INDUSTRIES <info@infinite.industries>',
-  to: 'shifting.planes@gmail.com',
-  subject: 'Hello',
-  text: 'Testing some Mailgun awesomness!'
-};
-
-mailgun.messages().send(data, function (error, body) {
-  console.log(body);
-});
-
-
-
-
-
+var mail_content = emailLibrary.mail_processed_success;
+mail_content.to = ['dimabkup@gmail.com'];
+mg.messages.create(mail_domain,mail_content)
+  .then(msg => console.log(msg))
+  .catch(err => console.log(err));
 
 
 app.engine('handlebars',
@@ -44,19 +37,6 @@ app.engine('handlebars',
 );
 app.set('view engine', 'handlebars');
 
-var message_2_user = {
-		"template_content":[{
-        "name": "example name",
-        "content": "example content"
-    }],
-
-    "message": {
-        "from_email":"info@infinite.industries",
-        "to":[{"email":"shifting.planes@gmail.com"}],
-        "subject": "test from Mandrill",
-        "text": "First basic test from Mandrill."
-    }
-};
 
 //ROUTES
 app.get('/', function (req, res) {
@@ -66,16 +46,6 @@ app.get('/', function (req, res) {
   //  mailCue.processMail(3, function(status){
   //    res.end('{"status":"success"}');
   //  });
-
-   mandrill_client.messages.send(message_2_user,
-     function(res){
-          console.log(res);
-      },
-     function(err) {
-          console.log(err);
-         console.log("oops!");
-
-      });
 })
 
 app.get('/result', function (req, res) {
