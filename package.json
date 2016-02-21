@@ -10,7 +10,6 @@
     "express-handlebars": "^3.0.0",
     "flightplan": "^0.6.9",
     "lob": "^3.7.0",
-    "mailgun-js": "^0.7.7",
     "mailgun.js": "^1.4.0",
     "stripe": "^4.3.0",
     "uuid": "^2.0.1",
