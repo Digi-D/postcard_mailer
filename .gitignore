@@ -1,5 +1,7 @@
 production_test_mailer.js
 .DS_Store
 node_modules/
+snippets/
 app_modules/config.js
 log.json
+todo
