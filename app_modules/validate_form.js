@@ -8,13 +8,18 @@ var isValidUSZip = function(sZip) {
 }
 
 module.exports= {
-
   confirmationMessage: function (params_to_validate, path_to_confirmation_view, callback) {
     this.params_to_validate = params_to_validate;
+
     var country = "US";
+    var validation_report = [];
     var are_params_valid = true;
+
+    validation_report['report_timestamp'] = "bs_timestamp";
     if(!validator.isAlpha(this.params_to_validate.first_name)){
       are_params_valid= false;
+      validation_report['first_name'] = this.params_to_validate.first_name;
+      validation_report['first_name_status'] = "faled";
     }
     else if(!validator.isAlpha(this.params_to_validate.last_name)){
       are_params_valid= false;
@@ -54,7 +59,7 @@ module.exports= {
       }
     }
 
-    callback(path_to_confirmation_view, {
+    callback(path_to_confirmation_view, validation_report, {
       //pass all of the form inputs and validation state to
       //handlebars engine to render
       visitor_info:this.params_to_validate,

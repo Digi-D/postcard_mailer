@@ -12,22 +12,19 @@ var mg = mailgun.client({username: 'api', key: config.MAILGUN_API_KEY});
 var mail_domain = config.MAILGUN_DOMAIN;
 
 var validate = require('./app_modules/validate_form.js');
-//var mailCue = require('./app_modules/mail_cue.js');
+var mailCue = require('./app_modules/serial_mail_cue.js');
 var hbarsHelpers = require('./app_modules/helpers.js');
 
 var stripe = require("stripe")(config.TEST_STRIPE_SECRET_KEY);
-//var mailgun = require('mailgun-js')({apiKey: config.MAILGUN_API_KEY, domain: config.MAILGUN_DOMAIN});
 
 var app = express();
 var json_parser = bodyParser.json();
 
-
-var mail_content = emailLibrary.mail_processed_success;
-mail_content.to = ['dimabkup@gmail.com'];
-mg.messages.create(mail_domain,mail_content)
-  .then(msg => console.log(msg))
-  .catch(err => console.log(err));
-
+// var mail_content = emailLibrary.mail_processed_success;
+// mail_content.to = ['dimabkup@gmail.com'];
+// mg.messages.create(mail_domain,mail_content)
+//   .then(msg => console.log(msg))
+//   .catch(err => console.log(err));
 
 app.engine('handlebars',
   hbars({
@@ -41,16 +38,11 @@ app.set('view engine', 'handlebars');
 //ROUTES
 app.get('/', function (req, res) {
 // present the project and address/number of postcards to the viewers
-   res.render( __dirname + "/views/" + "index" );
+  res.render( __dirname + "/views/" + "index" );
 
-  //  mailCue.processMail(3, function(status){
-  //    res.end('{"status":"success"}');
-  //  });
-})
-
-app.get('/result', function (req, res) {
-//report result of the card charge and postcard send requests to the viewers
-   res.render( __dirname + "/views/" + "results" );
+    // mailCue.processMail(3, function(status){
+    //   res.end('{"status":"success"}');
+    // });
 })
 
 app.get('/get_visitor_info', function (req, res) {
@@ -70,9 +62,13 @@ app.get('/get_visitor_info', function (req, res) {
     price:0 //just a placeholder for now :( --> make this prettier!
   }
 
-  validate.confirmationMessage(visitor_info, __dirname + "/views/" + "confirm", function(path, validation_state){
+  mailCue.init(5,visitor_info);
+  //initialize mail cue here but run it only after the credit card gets processed
+
+  validate.confirmationMessage(visitor_info, __dirname + "/views/" + "confirm", function(path, validation_report,validation_state){
+    //console.log(validation_report);   //send out validation report
     res.render(path, validation_state);
-    mailCue.init(visitor_info);
+    //mailCue.init(visitor_info);
   });
 
 })
@@ -90,10 +86,32 @@ app.post('/finalize_payment', json_parser, function (req, res) {
       }
       else {
         console.log(charge);
-        console.log("begin sending cards");
+        mailCue.startProcessing(function(delivery_status){
+            if(delivery_status==true){
+              //res.redirect('/result');
+              res.end('{"status":"success"}');
+            }
+            else {
+              //res.redirect('/result');
+              res.end('{"status":"error"}');
+            }
+            console.log('DELIVERY_STATUS: '+delivery_status);
+            console.log("done done and done!");
+          });
       }
     }
   );
+})
+
+app.get('/result', function (req, res) {
+//report result of the card charge and postcard send requests to the viewers
+  if(req.query.delivery_status=="success"){
+    res.render( __dirname + "/views/" + "results", {delivery_status:true});
+  }
+  else{
+    res.render( __dirname + "/views/" + "results",{delivery_status:false});
+  }
+
 })
 
 //SERVER SETUP

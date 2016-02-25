@@ -1,9 +1,22 @@
-<div id="intro">
-  <h1>The International: an <a href="http://infinite.industries" target="_blank"> infinite.industries</a> project</h1>
+<div id="directions" style ="font-family: 'Lustria', serif;">
+  Using 10 or more cards create a rectangular structure on the wall surface.
+  Maintain strict parallel and perpendicular lines with the structure and
+  between it and major architectural elements.  Cards can overlap.
 </div>
-<div id="Explanation">
-  We charge $2.00 per card. Ten cards is the recommended minimum for the order but you are free to choose any amount.
-  Any damage to the postcard's surface as it is going through the mail system is considered to be a part of the work.
+<div id="social_media">
+  icons and such here
+</div>
+
+<div id="project_title">
+  The International: an <a href="http://infinite.industries" target="_blank"> infinite.industries</a> project
+</div>
+
+<div id="card_copy">
+  <p>
+    You can download the card design here or order them the form below.
+    Each will be individually sent through the mail to a shipping address
+    of your choice.
+  </p>
 </div>
 <form action="/get_visitor_info" method="GET">
 Your First Name: <input type="text" name="visitor_first_name">  <br />
@@ -67,8 +80,33 @@ State: <select name="visitor_state">
 </select> <br />
 Zip: <input type="number" name="visitor_zip"> <br />
 Country: at this point US only <em>(yes, we realize the irony...)</em><br />
-Number of Postcards: <input type="number" name="number_of_cards"> <br />
-
+Number of Postcards: <input id="number_of_cards" type="number" name="number_of_cards" value='10'> <br />
+Total: <span id="price">00.00</span>
+<p>
+  We charge $2.00 per card. Ten cards is the recommended minimum for the order but you are free to choose any amount.
+  Any damage to the postcard's surface, as it is going through the mail system, is considered to be a part of the work.
+</p>
 
 <input type="submit" value="Order">
 </form>
+<script>
+  $(document).ready(function() {
+    var number_of_cards= 10;
+    var price = 0.00;
+    var CARD_PRICE = 2.00;
+
+    var calc_price = function(number_of_cards,CARD_PRICE){
+      $('#price').html('$'+(number_of_cards*CARD_PRICE).toFixed(2));
+    }
+
+    calc_price(number_of_cards,CARD_PRICE);
+
+    $('#number_of_cards').keyup(function() {
+      calc_price($('#number_of_cards').val(),CARD_PRICE);
+    });
+    $('#number_of_cards').change(function() {
+      calc_price($('#number_of_cards').val(),CARD_PRICE);
+    });
+
+  });
+</script>
