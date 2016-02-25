@@ -7,13 +7,13 @@ var bodyParser = require('body-parser');
 var uuid = require('uuid');
 
 var mailgun = require('mailgun.js');
-var emailLibrary = require('./app_modules/transactional_email.js');
+var emailLibrary = require('./app_modules/transactional_email_lib.js');
 var mg = mailgun.client({username: 'api', key: config.MAILGUN_API_KEY});
 var mail_domain = config.MAILGUN_DOMAIN;
 
 var validate = require('./app_modules/validate_form.js');
-var mailCue = require('./app_modules/serial_mail_cue.js');
-var hbarsHelpers = require('./app_modules/helpers.js');
+var mailPostcards = require('./app_modules/mail_postcards.js');
+var handlebarsHelpers = require('./app_modules/handlebars_helpers.js');
 
 var stripe = require("stripe")(config.TEST_STRIPE_SECRET_KEY);
 
@@ -29,7 +29,7 @@ var json_parser = bodyParser.json();
 app.engine('handlebars',
   hbars({
     defaultLayout: 'container',
-    helpers:hbarsHelpers
+    helpers:handlebarsHelpers
   })
 );
 app.set('view engine', 'handlebars');
@@ -62,13 +62,12 @@ app.get('/get_visitor_info', function (req, res) {
     price:0 //just a placeholder for now :( --> make this prettier!
   }
 
-  mailCue.init(5,visitor_info);
+  mailPostcards.init(5,visitor_info);
   //initialize mail cue here but run it only after the credit card gets processed
 
   validate.confirmationMessage(visitor_info, __dirname + "/views/" + "confirm", function(path, validation_report,validation_state){
     //console.log(validation_report);   //send out validation report
     res.render(path, validation_state);
-    //mailCue.init(visitor_info);
   });
 
 })
@@ -86,16 +85,14 @@ app.post('/finalize_payment', json_parser, function (req, res) {
       }
       else {
         console.log(charge);
-        mailCue.startProcessing(function(delivery_status){
+        mailPostcards.send(function(delivery_status){
             if(delivery_status==true){
-              //res.redirect('/result');
               res.end('{"status":"success"}');
             }
             else {
-              //res.redirect('/result');
               res.end('{"status":"error"}');
             }
-            console.log('DELIVERY_STATUS: '+delivery_status);
+            //console.log('DELIVERY_STATUS: '+delivery_status);
             console.log("done done and done!");
           });
       }
