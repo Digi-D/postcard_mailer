@@ -4,6 +4,7 @@
   "description": "Basic mailer test via Lob + payment via Stripe",
   "main": "app.js",
   "dependencies": {
+    "async": "^1.5.2",
     "body-parser": "^1.14.2",
     "bunyan": "^1.5.1",
     "express": "^4.13.4",

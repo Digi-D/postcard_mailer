@@ -18,6 +18,27 @@
   </div>
 </div>
 
+<div class="modal fade" id="connection_error" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Connection Problems</h4>
+        </div>
+        <div class="modal-body">
+          <p> hrrmmmm... :( Having issues connecting to our
+            servers. Please try again in a couple
+            of minutes. If you have any questions,
+            please reach out to us at info@infinite.industries.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+
 <script>
   var user_email='';
   var user_payment=0;
@@ -47,6 +68,7 @@
         },
         error: function(data) {
           console.log("Connection Error");
+          $('#connection_error').modal('show');
           console.log(data);
         }
       });
