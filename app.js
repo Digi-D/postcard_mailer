@@ -12,7 +12,7 @@ var mg = mailgun.client({username: 'api', key: config.MAILGUN_API_KEY});
 var mail_domain = config.MAILGUN_DOMAIN;
 
 var validate = require('./app_modules/validate_form.js');
-//var mailPostcards = require('./app_modules/mail_postcards.js');
+var mailPostcards = require('./app_modules/mail_postcards.js');
 var handlebarsHelpers = require('./app_modules/handlebars_helpers.js');
 
 var stripe = require("stripe")(config.TEST_STRIPE_SECRET_KEY);
@@ -54,15 +54,15 @@ app.get('/get_visitor_info', function (req, res) {
     last_name:req.query.visitor_last_name,
     email:req.query.visitor_email,
     address_1:req.query.visitor_address_1,
-    address_2:req.query.visitor_address_2,
+    //address_2:req.query.visitor_address_2,      // LOB throws and error here --> ?!!!
     city:req.query.visitor_city,
     state:req.query.visitor_state,
     zip:req.query.visitor_zip,
     number_of_cards:req.query.number_of_cards,
-    price:0 //just a placeholder for now :( --> make this prettier!
+    price: undefined
   }
 
-  //mailPostcards.init(5,visitor_info);
+  mailPostcards.init(visitor_info);
   //initialize mail cue here but run it only after the credit card gets processed
 
   validate.confirmationMessage(visitor_info, __dirname + "/views/" + "confirm", function(path, validation_report,validation_state){
@@ -84,17 +84,18 @@ app.post('/finalize_payment', json_parser, function (req, res) {
         // The card has been declined
       }
       else {
-        console.log(charge);
-        // mailPostcards.send(function(delivery_status){
-        //     if(delivery_status==true){
-        //       res.end('{"status":"success"}');
-        //     }
-        //     else {
-        //       res.end('{"status":"error"}');
-        //     }
-        //     //console.log('DELIVERY_STATUS: '+delivery_status);
-        //     console.log("done done and done!");
-        //   });
+        console.log("Charge successfull begin sending cards.");
+        mailPostcards.send(function(err, status, result){
+           if(err){
+           // WRITE TO LOG
+           //email admin
+            res.end('{"status":"error"}');
+           }
+           else{
+            res.end('{"status":"success","deliver":"'+result.expected_delivery_date+'"}');
+           }
+           console.log(result.expected_delivery_date);
+         });
       }
     }
   );
@@ -103,7 +104,7 @@ app.post('/finalize_payment', json_parser, function (req, res) {
 app.get('/result', function (req, res) {
 //report result of the card charge and postcard send requests to the viewers
   if(req.query.delivery_status=="success"){
-    res.render( __dirname + "/views/" + "results", {delivery_status:true});
+    res.render( __dirname + "/views/" + "results", {delivery_status:true,delivery_date:req.query.delivery_date});
   }
   else{
     res.render( __dirname + "/views/" + "results",{delivery_status:false});

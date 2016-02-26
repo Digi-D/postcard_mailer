@@ -3,6 +3,4 @@ Code experiments for online component of "The International" - postcard sale and
 
 Uses Stripe for credit card processing and Lob for mailing the cards.
 
-Main app --> node app.js  --> currently doesn't send cards 
-
-Stuck with async implementation  --> node test_postcards.js
+Main app --> node app.js

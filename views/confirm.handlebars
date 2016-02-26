@@ -55,19 +55,16 @@
         contentType: 'application/json;charset=utf-8',
         data: JSON.stringify({tokenid: token.id, email: token.email, payment_amount: user_payment}),
         success: function(data) {
-          console.log("Ajax Success!");
           console.log(data.status);
           if(data.status=='success'){
-            window.location.href = "/result?delivery_status=success";
+            window.location.href = "/result?delivery_status=success&delivery_date="+data.deliver;
           }
           else{
             window.location.href = "/result?delivery_status=failed";
           }
-          //on success post the whole form to the server
-          //http://stackoverflow.com/questions/3513971/page-redirect-with-successful-ajax-request
         },
         error: function(data) {
-          console.log("Connection Error");
+          //console.log("Connection Error");
           $('#connection_error').modal('show');
           console.log(data);
         }

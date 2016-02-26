@@ -3,7 +3,23 @@ var config = require('./config.js'); //throw your keys here
 var Lob = require('lob')(config.TEST_LOB_KEY);
 var async = require('async');
 
-var sendPostcard = function (mail_description, mail_to, cb) {
+var mail_params = {
+  description: null,
+  //skipping "from" attribute
+  to: {
+    name: null,
+    address_line1: null,
+    address_city: null,
+    address_state: null,
+    address_zip: null
+  },
+  queue_length: null
+};
+
+var sendPostcard = function (mail_description, mail_to, callback) {
+  console.log(mail_description);
+  console.log(mail_to.address_state);
+
   Lob.postcards.create({
       description: mail_description,
       to: mail_to,
@@ -11,20 +27,30 @@ var sendPostcard = function (mail_description, mail_to, cb) {
       back: '<html style="padding-left:0.3in;padding-top:0.5in"><div style="font-size:0.3in">The International</div><div style="font-size:15px;padding-top:0.1in; padding-left:0.2in;font-family:sans-serif;">infinite.industries/the-international</div></html>',
     },
     function (err, res) {
-      console.log(err);
-      cb(err, res);   // !  - if you need success action  cb(null, res);
+      console.log('log:'+err);
+      callback(err, res);   // !  - if you need success action  cb(null, res);
     });
 };
 
 var repeat = 3;
 
-var mail_params = {};
+// var mail_params = {};
 var status = 'success';
 
 module.exports = {
   status: status,
   init: function (params) {
-    mail_params = params;
+
+    mail_params.queue_length = params.number_of_cards;
+    mail_params.description = "job_id-"+params.id;
+    mail_params.to.name = params.first_name+" "+params.last_name;
+    mail_params.to.address_line1 = params.address_1;
+    // if(params.address_2.length>0){
+    //   mail_params.to.address_line2 = params.address_2;
+    // }
+    mail_params.to.address_city = params.city;
+    mail_params.to.address_state = params.state;
+    mail_params.to.address_zip = params.zip;
   },
   send: function (callback) {
     var result;
@@ -36,9 +62,11 @@ module.exports = {
           sendPostcard(mail_params.description, mail_params.to, callback);
         },
         function (err, result) {
-          if (err) status = 'failure';
+          if (err) status = 'error';
           if (counter == mail_params.queue_length) {
-            callback(err, status);
+            callback(err, status, result);
+            //returns the result info on the last card | not catching the case of
+            //cards being sent over the break between two workdays :)
           }
           counter++;
         });
