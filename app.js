@@ -20,6 +20,10 @@ var stripe = require("stripe")(config.TEST_STRIPE_SECRET_KEY);
 var app = express();
 var json_parser = bodyParser.json();
 
+app.use(express.static('public')); //to serve out CSS and Javascript
+
+console.log(app.settings.env);
+
 // var mail_content = emailLibrary.mail_processed_success;
 // mail_content.to = ['dimabkup@gmail.com'];
 // mg.messages.create(mail_domain,mail_content)
@@ -40,9 +44,6 @@ app.get('/', function (req, res) {
 // present the project and address/number of postcards to the viewers
   res.render( __dirname + "/views/" + "index" );
 
-    // mailCue.processMail(3, function(status){
-    //   res.end('{"status":"success"}');
-    // });
 })
 
 app.get('/get_visitor_info', function (req, res) {
@@ -115,9 +116,6 @@ app.get('/result', function (req, res) {
 //SERVER SETUP
 var server = app.listen(8081, function () {
 
-  var host = server.address().address
-  var port = server.address().port
-
-  console.log("Example app listening at http://%s:%s", host, port)
+  console.log("Shazam!")
 
 })
