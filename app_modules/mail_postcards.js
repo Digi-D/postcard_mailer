@@ -1,6 +1,6 @@
 var fs = require('fs');
 var config = require('./config.js'); //throw your keys here
-var Lob = require('lob')(config.TEST_LOB_KEY);
+var Lob = require('lob')(config.getKey('LOB_KEY'));
 var async = require('async');
 
 var mail_params = {

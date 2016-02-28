@@ -1,6 +1,7 @@
-//NEED TO: add decent design, installation shots from sites
-//Questions: How to validate address?
+
 var config = require('./app_modules/config.js');
+config.setMode('TEST');
+
 var express = require('express');
 var hbars = require('express-handlebars');
 var bodyParser = require('body-parser');
@@ -8,14 +9,14 @@ var uuid = require('uuid');
 
 var mailgun = require('mailgun.js');
 var emailLibrary = require('./app_modules/transactional_email_lib.js');
-var mg = mailgun.client({username: 'api', key: config.MAILGUN_API_KEY});
-var mail_domain = config.MAILGUN_DOMAIN;
+var mg = mailgun.client({username: 'api', key: config.getGlobal('LIVE_MAILGUN_API_KEY')});
+var mail_domain = config.getGlobal('LIVE_MAILGUN_DOMAIN');
 
 var validate = require('./app_modules/validate_form.js');
 var mailPostcards = require('./app_modules/mail_postcards.js');
 var handlebarsHelpers = require('./app_modules/handlebars_helpers.js');
 
-var stripe = require("stripe")(config.TEST_STRIPE_SECRET_KEY);
+var stripe = require("stripe")(config.getKey('STRIPE_SECRET_KEY'));
 
 var app = express();
 var json_parser = bodyParser.json();
@@ -41,7 +42,8 @@ app.set('view engine', 'handlebars');
 //ROUTES
 app.get('/', function (req, res) {
 // present the project and address/number of postcards to the viewers
-  res.render( __dirname + "/views/" + "index" );
+  var card_price_val = config.getGlobal('PRICE_PER_CARD');
+  res.render( __dirname + "/views/" + "index" ,{card_price:card_price_val});
 
 })
 
@@ -65,9 +67,10 @@ app.get('/get_visitor_info', function (req, res) {
   mailPostcards.init(visitor_info);
   //initialize mail cue here but run it only after the credit card gets processed
 
-  validate.confirmationMessage(visitor_info, __dirname + "/views/" + "confirm", function(path, validation_report,validation_state){
+  var stripe_key = config.getKey('STRIPE_PUBLISHABLE_KEY');
+  validate.confirmationMessage(visitor_info, __dirname + "/views/" + "confirm", stripe_key, function(path, validation_report,validation_states){
     //console.log(validation_report);   //send out validation report
-    res.render(path, validation_state);
+    res.render(path, validation_states);
   });
 
 })

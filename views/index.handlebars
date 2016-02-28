@@ -148,7 +148,7 @@
   $(document).ready(function() {
     var number_of_cards= 10;
     var price = 0.00;
-    var CARD_PRICE = 2.00;
+    var CARD_PRICE = {{card_price}};
 
     var calc_price = function(number_of_cards,CARD_PRICE){
       $('#price').html('$'+(number_of_cards*CARD_PRICE).toFixed(2));

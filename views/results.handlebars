@@ -1,13 +1,33 @@
 {{#if delivery_status}}
-  <h1>Thank You!</h1>
-  <p>Super appreciate the order and hope that you enjoy the experience
-    of creating and seeing <em>The International</em> in your life.
-  <p>
-  <p>Estimated delivery date is: {{delivery_date}}</p>
-{{else}}
-<div class="jumbotron">
-Hmmmm... something went wrong. One or more cards did not get processed.
-We will look into the issue and contact you shortly. Meanwhile, if you have any questions,
-please reach out to us at info@infinite.industries
+<div class="panel panel-primary panel-results">
+  <div class="panel-heading">
+    <h3 class="panel-title">Thank You!</h3>
+  </div>
+  <div class="panel-body">
+    <p>Super appreciate the order and hope that you enjoy the experience
+      of creating and seeing <em>The International</em> in your life.
+    <p>
+    <p>Estimated delivery date is: {{delivery_date}}</p>
+    <p><a href ="https://the-international.infinite.industries">Back to project home</a></p>
+  </div>
 </div>
+
+{{else}}
+<div class="panel panel-danger panel-results">
+  <div class="panel-heading">
+    <h3 class="panel-title">:(</h3>
+  </div>
+  <div class="panel-body">
+    <p>
+    Hmmmm... something went wrong. One or more cards did not get processed.
+  </p>
+  <p>
+    We will look into the issue and contact you shortly. Meanwhile, if you have any questions,
+    please reach out to us at <a href="mailto:&#105;&#110;&#102;&#111;&#064;&#105;&#110;&#102;&#105;&#110;&#105;&#116;&#101;&#046;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#101;&#115;">
+      &#105;&#110;&#102;&#111;&#064;&#105;&#110;&#102;&#105;&#110;&#105;&#116;&#101;&#046;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#101;&#115;</a>
+    </p>
+    <p><a href ="https://the-international.infinite.industries">Back to project home</a></p>
+  </div>
+</div>
+
 {{/if}}

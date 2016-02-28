@@ -8,8 +8,9 @@ var isValidUSZip = function(sZip) {
 }
 
 module.exports= {
-  confirmationMessage: function (params_to_validate, path_to_confirmation_view, callback) {
+  confirmationMessage: function (params_to_validate, path_to_confirmation_view, stripe_key, callback) {
     this.params_to_validate = params_to_validate;
+    this.stripe_key = stripe_key;
 
     var country = "US";
     var validation_report = [];
@@ -65,7 +66,7 @@ module.exports= {
       }
 
       if(this.params_to_validate.number_of_cards>0){
-          this.params_to_validate.price = this.params_to_validate.number_of_cards*config.PRICE_PER_CARD;
+          this.params_to_validate.price = this.params_to_validate.number_of_cards*config.getGlobal('PRICE_PER_CARD');
           are_params_valid = true;
       }
       else {
@@ -76,13 +77,13 @@ module.exports= {
     }
 
     validation_report['report_exit_status'] = are_params_valid;
-    
-    callback(path_to_confirmation_view, validation_report, {
+
+    callback(path_to_confirmation_view, validation_report,{
       //pass all of the form inputs and validation state to
       //handlebars engine to render
       visitor_info:this.params_to_validate,
       params_valid:are_params_valid,
-      stripe_key:config.TEST_STRIPE_PUBLISHABLE_KEY
+      stripe_key:this.stripe_key
     });
   },
 }
