@@ -38,7 +38,6 @@ app.engine('handlebars',
 );
 app.set('view engine', 'handlebars');
 
-
 //ROUTES
 app.get('/', function (req, res) {
 // present the project and address/number of postcards to the viewers

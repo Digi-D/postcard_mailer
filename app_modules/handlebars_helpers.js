@@ -8,5 +8,6 @@ module.exports = {
     else {
       return options.fn(this);
     }
+    console.log("used helpers");
   }
 }

@@ -1,95 +1,149 @@
-
-<div class="jumbotron" id="directions">
-  Using 10 or more cards create a rectangular structure on the wall surface.
-  Maintain strict parallel and perpendicular lines within the structure and
-  between it and major architectural elements.  Cards can overlap.
+<div class="row">
+  <div class="col-lg-2 col-md-1 hidden-sm"> </div>
+  <div class="panel panel-default col-md-10 col-lg-8 directions">
+    <div class="panel-body">
+      USING TEN OR MORE CARDS CREATE A RECTANGULAR STRUCTURE.
+      MAINTAIN STRICT PARALLEL AND PERPENDICULAR LINES WITHIN THE STRUCTURE AND
+      BETWEEN IT AND MAJOR ARCHITECTURAL ELEMENTS AROUND YOU. CARDS CAN OVERLAP.
+      <div id="social_media">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=infinite.industries" target="_new"><i class="fa fa-facebook"></i></a>
+        <a href="https://twitter.com/intent/tweet?text=Check%20out%20url_here&via=infint_indstris" target="_new"><i class="fa fa-twitter"></i></a>
+        <a href="mailto:?&subject=Check out this site!&body=Here%20is%20a%20site%20that%20I%20liked"><i class="fa fa-envelope-o"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-2 col-md-1 hidden-sm"> </div>
+</div>
+<div class="row text-right">
+  <div class="col-lg-2 col-md-1 hidden-sm"> </div>
+  <div class="col-md-10 col-lg-8">
+    <h2 class="project-title">The International: an <a href="http://infinite.industries" target="_blank"> infinite.industries</a> project</h2>
+  </div>
+  <div class="col-lg-2 col-md-1 hidden-sm"> </div>
 </div>
 
-<div id="social_media">
-  icons and such here
+<div class="row card-copy">
+  <div class="panel panel-default col-xs-12">
+    <div class="panel-body explanation">
+      You can <a href="./media/the_international_template.png">download</a> the card design or order card(s) using the form below.
+      Each will be individually sent through the mail to a shipping address
+      of your choice.
+    </div>
+</div>
+</div>
+<div class="row input-form">
+  <div class="col-lg-2 col-md-1 hidden-sm"> </div>
+  <div class="col-md-5 col-lg-4">
+    <form data-toggle="validator" role="form" action="/get_visitor_info" method="GET">
+      <div class="form-group">
+        <label for="visitor_first_name" class="control-label">First Name</label>
+        <input type="text" class="form-control" name="visitor_first_name" id="visitor_first_name" required>
+      </div>
+      <div class="form-group">
+        <label for="visitor_last_name" class="control-label">Last Name</label>
+        <input type="text" class="form-control" name="visitor_last_name" id="visitor_last_name" required>
+      </div>
+      <div class="form-group">
+        <label for="inputEmail" class="control-label">Email</label>
+        <input type="text" class="form-control" name="visitor_email" id="inputEmail" data-error="Please use a valid email address." required>
+        <div class="help-block with-errors"></div>
+      </div>
+      <div class="form-group">
+        <label for="visitor_address_1" class="control-label">Address <em>(shipping)</em></label>
+        <input type="text" name="visitor_address_1" class="form-control" id="visitor_address_1" required>
+      </div>
+
+      <div class="form-group">
+        <label for="visitor_city" class="control-label">City <em>(shipping)</em></label>
+        <input type="text" name="visitor_city" class="form-control" id="visitor_city" required>
+      </div>
+      <div class="form-group">
+        <label for="visitor_state" class="control-label">State <em>(shipping)</em></label>
+        <select class="form-control" name="visitor_state" id="visitor_state" required>
+        <option value="null"></option>
+        <option value="AL">Alabama</option>
+        <option value="AK">Alaska</option>
+        <option value="AZ">Arizona</option>
+        <option value="AR">Arkansas</option>
+        <option value="CA">California</option>
+        <option value="CO">Colorado</option>
+        <option value="CT">Connecticut</option>
+        <option value="DE">Delaware</option>
+        <option value="DC">District Of Columbia</option>
+        <option value="FL">Florida</option>
+        <option value="GA">Georgia</option>
+        <option value="HI">Hawaii</option>
+        <option value="ID">Idaho</option>
+        <option value="IL">Illinois</option>
+        <option value="IN">Indiana</option>
+        <option value="IA">Iowa</option>
+        <option value="KS">Kansas</option>
+        <option value="KY">Kentucky</option>
+        <option value="LA">Louisiana</option>
+        <option value="ME">Maine</option>
+        <option value="MD">Maryland</option>
+        <option value="MA">Massachusetts</option>
+        <option value="MI">Michigan</option>
+        <option value="MN">Minnesota</option>
+        <option value="MS">Mississippi</option>
+        <option value="MO">Missouri</option>
+        <option value="MT">Montana</option>
+        <option value="NE">Nebraska</option>
+        <option value="NV">Nevada</option>
+        <option value="NH">New Hampshire</option>
+        <option value="NJ">New Jersey</option>
+        <option value="NM">New Mexico</option>
+        <option value="NY">New York</option>
+        <option value="NC">North Carolina</option>
+        <option value="ND">North Dakota</option>
+        <option value="OH">Ohio</option>
+        <option value="OK">Oklahoma</option>
+        <option value="OR">Oregon</option>
+        <option value="PA">Pennsylvania</option>
+        <option value="RI">Rhode Island</option>
+        <option value="SC">South Carolina</option>
+        <option value="SD">South Dakota</option>
+        <option value="TN">Tennessee</option>
+        <option value="TX">Texas</option>
+        <option value="UT">Utah</option>
+        <option value="VT">Vermont</option>
+        <option value="VA">Virginia</option>
+        <option value="WA">Washington</option>
+        <option value="WV">West Virginia</option>
+        <option value="WI">Wisconsin</option>
+        <option value="WY">Wyoming</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="visitor_zip" class="control-label">Zip <em>(shipping)</em></label>
+        <input type="number" name="visitor_zip" class="form-control" id="visitor_zip" required>
+      </div>
+      <div class="form-group">
+        Country: at this point US only <em>(yes, we realize the irony...)</em><br />
+      </div>
+    </div>
+    <div class="col-md-5 col-lg-4">
+      <div class="form-group">
+        <label for="number_of_cards" class="control-label">Number of Postcards</label>
+        <input id="number_of_cards" type="number" name="number_of_cards" class="form-control" value='10' required>
+      </div>
+      <h4>Total: <span id="price">00.00</span></h4>
+    <p>
+      We charge $2.00 per card. Ten cards is the recommended minimum for the order but you are free to choose any amount.
+      Any damage to the postcard's surface, as it is going through the mail system, is considered to be a part of the work.
+      For any questions or comments, please send email to <a href="mailto:&#105;&#110;&#102;&#111;&#064;&#105;&#110;&#102;&#105;&#110;&#105;&#116;&#101;&#046;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#101;&#115;">
+        &#105;&#110;&#102;&#111;&#064;&#105;&#110;&#102;&#105;&#110;&#105;&#116;&#101;&#046;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#101;&#115;</a>
+    </p>
+
+    <input class="btn btn-primary pull-right submit_order" type="submit" value="Submit Order">
+    </form>
+  </div>
+  <div class="col-lg-2 col-md-1 hidden-sm"> </div>
+</div>
+<div class="row">
+  <div class="col-xs-12 bottom-shim"></td>
 </div>
 
-<div id="project_title">
-  The International: an <a href="http://infinite.industries" target="_blank"> infinite.industries</a> project
-</div>
-
-<div id="card_copy">
-  <p>
-    You can download the card design here or order them the form below.
-    Each will be individually sent through the mail to a shipping address
-    of your choice.
-  </p>
-</div>
-<form action="/get_visitor_info" method="GET">
-Your First Name: <input type="text" name="visitor_first_name">  <br />
-Your Last Name: <input type="text" name="visitor_last_name">  <br />
-Email:<input type="text" name="visitor_email">  <br />
-Address: <input type="text" name="visitor_address_1"> <br />
-City: <input type="text" name="visitor_city"> <br />
-State: <select name="visitor_state">
-<option value="AL">Alabama</option>
-<option value="AK">Alaska</option>
-<option value="AZ">Arizona</option>
-<option value="AR">Arkansas</option>
-<option value="CA">California</option>
-<option value="CO">Colorado</option>
-<option value="CT">Connecticut</option>
-<option value="DE">Delaware</option>
-<option value="DC">District Of Columbia</option>
-<option value="FL">Florida</option>
-<option value="GA">Georgia</option>
-<option value="HI">Hawaii</option>
-<option value="ID">Idaho</option>
-<option value="IL">Illinois</option>
-<option value="IN">Indiana</option>
-<option value="IA">Iowa</option>
-<option value="KS">Kansas</option>
-<option value="KY">Kentucky</option>
-<option value="LA">Louisiana</option>
-<option value="ME">Maine</option>
-<option value="MD">Maryland</option>
-<option value="MA">Massachusetts</option>
-<option value="MI">Michigan</option>
-<option value="MN">Minnesota</option>
-<option value="MS">Mississippi</option>
-<option value="MO">Missouri</option>
-<option value="MT">Montana</option>
-<option value="NE">Nebraska</option>
-<option value="NV">Nevada</option>
-<option value="NH">New Hampshire</option>
-<option value="NJ">New Jersey</option>
-<option value="NM">New Mexico</option>
-<option value="NY">New York</option>
-<option value="NC">North Carolina</option>
-<option value="ND">North Dakota</option>
-<option value="OH">Ohio</option>
-<option value="OK">Oklahoma</option>
-<option value="OR">Oregon</option>
-<option value="PA">Pennsylvania</option>
-<option value="RI">Rhode Island</option>
-<option value="SC">South Carolina</option>
-<option value="SD">South Dakota</option>
-<option value="TN">Tennessee</option>
-<option value="TX">Texas</option>
-<option value="UT">Utah</option>
-<option value="VT">Vermont</option>
-<option value="VA">Virginia</option>
-<option value="WA">Washington</option>
-<option value="WV">West Virginia</option>
-<option value="WI">Wisconsin</option>
-<option value="WY">Wyoming</option>
-</select> <br />
-Zip: <input type="number" name="visitor_zip"> <br />
-Country: at this point US only <em>(yes, we realize the irony...)</em><br />
-Number of Postcards: <input id="number_of_cards" type="number" name="number_of_cards" value='10'> <br />
-Total: <span id="price">00.00</span>
-<p>
-  We charge $2.00 per card. Ten cards is the recommended minimum for the order but you are free to choose any amount.
-  Any damage to the postcard's surface, as it is going through the mail system, is considered to be a part of the work.
-</p>
-
-<input type="submit" value="Order">
-</form>
 <script>
   $(document).ready(function() {
     var number_of_cards= 10;

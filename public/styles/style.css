@@ -1,5 +1,63 @@
-#directions{
+.directions{
   color:#aaa;
-  font-size: 40px;
   font-family: "Lustri" , serif; font-weight: 400;
+  letter-spacing: 1px;
+  line-height: 110%;
+}
+
+.project-title{
+  padding-top: 0px;
+  margin-bottom: 20px;
+  font-size: 25px;
+}
+
+@media only screen and (min-width: 768px) {
+  .directions{
+    font-size: 35px;
+    margin-top: 20px;
+    text-align: left;
+  }
+
+  .project-title{
+    margin-top: 70px;
+    margin-right:5px;
+  }
+
+  .explanation{
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .directions{
+    font-size: 28px;
+    margin-top: 0px;
+    text-align: center;
+  }
+
+  .project-title{
+    margin-top: 30px;
+    margin-right:15px;
+  }
+
+  .explanation{
+    text-align: left;
+  }
+}
+
+#social_media{
+  margin-top: 30px;
+}
+.fa{
+  margin-right: 10px;
+}
+
+.bottom-shim{
+  margin-bottom: 30px;
+}
+.submit_order{
+  margin-top:20px;
+  margin-right:20px;
+  padding-right: 50px;
+  padding-left: 50px;
 }
