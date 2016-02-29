@@ -1,4 +1,3 @@
-
 var config = require('./app_modules/config.js');
 config.setMode('TEST');
 
@@ -18,6 +17,7 @@ var app = express();
 var json_parser = bodyParser.json();
 
 app.use(express.static('public')); //to serve out CSS and Javascript
+app.use(express.static('media')); //to serve out Image file for download
 
 console.log(app.settings.env);
 
@@ -81,6 +81,7 @@ app.post('/finalize_payment', json_parser, function (req, res) {
         mailPostcards.send(function(err, status, result){
            if(err){
             // WRITE TO LOG
+            console.log(result);
             //email admin
             transactionalEmail.sendAdminEmail('FAILED','admin_update', mailPostcards.jobSummary());
             //return error to the front end
@@ -109,6 +110,8 @@ app.get('/result', function (req, res) {
   }
 
 })
+
+
 
 //SERVER SETUP
 var server = app.listen(8081, function () {

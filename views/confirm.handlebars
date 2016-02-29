@@ -60,6 +60,7 @@
         url: '/finalize_payment',
         type: 'post',
         dataType: 'json',
+        timeout: 10000,
         contentType: 'application/json;charset=utf-8',
         data: JSON.stringify({tokenid: token.id, email: token.email, payment_amount: user_payment}),
         success: function(data) {

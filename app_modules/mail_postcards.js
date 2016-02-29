@@ -25,10 +25,10 @@ var sendPostcard = function (mail_description, mail_to, callback) {
       description: mail_description,
       to: mail_to,
       front: fs.readFileSync('./media/the_international.png'),
-      back: '<html style="padding-left:0.3in;padding-top:0.5in"><div style="font-size:0.3in">The International</div><div style="font-size:15px;padding-top:0.1in; padding-left:0.2in;font-family:sans-serif;">infinite.industries/the-international</div></html>',
+      back: '<html style="padding-left:0.3in;padding-top:0.5in"><div style="font-size:0.3in">The International</div><div style="font-size:15px;padding-top:0.1in; padding-left:0.2in;font-family:sans-serif;">the-international.infinite.industries</div></html>',
     },
     function (err, res) {
-      //console.log('log:'+err);
+      console.log('log:'+err);
       callback(err, res);
     });
 };
@@ -57,23 +57,28 @@ module.exports = {
   send: function (callback) {
     var result;
     var counter = 1;
-    for (var i = 0; i < mail_params.queue_length; i++) {
+
+    var sender =  function(){
       async.retry(
-        {times: repeat, interval: 100},
-        function (callback, results) {
-          sendPostcard(mail_params.description, mail_params.to, callback);
-        },
-        function (err, result) {
-          if (err) status = 'error';
-          if (counter == mail_params.queue_length) {
-            //err = {fake:'error'};
-            callback(err, status, result);
-            //returns the result info on the last card | not catching the case of
-            //cards being sent over the break between two workdays :)
-          }
+      {times: repeat, interval: 100},
+      function (callback, results) {
+        sendPostcard(mail_params.description, mail_params.to, callback);
+      },
+      function (err, result) {
+        if (err) status = 'error';
+        if (counter == mail_params.queue_length) {
+          //err = {fake:'error'};
+          callback(err, status, result);
+          //returns the result info on the last card | not catching the case of
+          //cards being sent over the break between two workdays
+        }
+        else {
           counter++;
-        });
+          sender();
+        }
+      })
     }
+    sender();
   },
   jobSummary: function(){
       return(mail_params);
