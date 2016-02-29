@@ -10,6 +10,7 @@ var uuid = require('uuid');
 var validate = require('./app_modules/validate_form.js');
 var mailPostcards = require('./app_modules/mail_postcards.js');
 var handlebarsHelpers = require('./app_modules/handlebars_helpers.js');
+var transactionalEmail = require('./app_modules/transactional_email.js');
 
 var stripe = require("stripe")(config.getKey('STRIPE_SECRET_KEY'));
 
@@ -19,12 +20,6 @@ var json_parser = bodyParser.json();
 app.use(express.static('public')); //to serve out CSS and Javascript
 
 console.log(app.settings.env);
-
-// var mail_content = emailLibrary.mail_processed_success;
-// mail_content.to = ['dimabkup@gmail.com'];
-// mg.messages.create(mail_domain,mail_content)
-//   .then(msg => console.log(msg))
-//   .catch(err => console.log(err));
 
 app.engine('handlebars',
   hbars({
@@ -85,14 +80,19 @@ app.post('/finalize_payment', json_parser, function (req, res) {
         console.log("Charge successfull begin sending cards.");
         mailPostcards.send(function(err, status, result){
            if(err){
-           // WRITE TO LOG
-           //email admin
+            // WRITE TO LOG
+            //email admin
+            transactionalEmail.sendAdminEmail('FAILED','admin_update', mailPostcards.jobSummary());
+            //return error to the front end
             res.end('{"status":"error"}');
            }
            else{
+            //email admin
+            transactionalEmail.sendAdminEmail('SUCCESS','admin_update', mailPostcards.jobSummary());
+            //return success and some vars to the front end
             res.end('{"status":"success","deliver":"'+result.expected_delivery_date+'"}');
            }
-           console.log(result.expected_delivery_date);
+           //console.log(result.expected_delivery_date);
          });
       }
     }

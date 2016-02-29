@@ -1,0 +1,21 @@
+{
+  "name": "the-international-front-end",
+  "homepage": "https://github.com/Digi-D/postcard_mailer",
+  "authors": [
+    "dima <shifting.planes@gmail.com>"
+  ],
+  "description": "local front end libs",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-validator": "^0.9.0"
+  }
+}

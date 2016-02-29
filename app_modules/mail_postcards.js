@@ -13,12 +13,13 @@ var mail_params = {
     address_state: null,
     address_zip: null
   },
-  queue_length: null
+  queue_length: null,
+  email: null
 };
 
 var sendPostcard = function (mail_description, mail_to, callback) {
-  console.log(mail_description);
-  console.log(mail_to.address_state);
+  //console.log(mail_description);
+  //console.log(mail_to.address_state);
 
   Lob.postcards.create({
       description: mail_description,
@@ -27,8 +28,8 @@ var sendPostcard = function (mail_description, mail_to, callback) {
       back: '<html style="padding-left:0.3in;padding-top:0.5in"><div style="font-size:0.3in">The International</div><div style="font-size:15px;padding-top:0.1in; padding-left:0.2in;font-family:sans-serif;">infinite.industries/the-international</div></html>',
     },
     function (err, res) {
-      console.log('log:'+err);
-      callback(err, res);   // !  - if you need success action  cb(null, res);
+      //console.log('log:'+err);
+      callback(err, res);
     });
 };
 
@@ -51,6 +52,7 @@ module.exports = {
     mail_params.to.address_city = params.city;
     mail_params.to.address_state = params.state;
     mail_params.to.address_zip = params.zip;
+    mail_params.email = params.email;
   },
   send: function (callback) {
     var result;
@@ -64,6 +66,7 @@ module.exports = {
         function (err, result) {
           if (err) status = 'error';
           if (counter == mail_params.queue_length) {
+            //err = {fake:'error'};
             callback(err, status, result);
             //returns the result info on the last card | not catching the case of
             //cards being sent over the break between two workdays :)
@@ -71,5 +74,8 @@ module.exports = {
           counter++;
         });
     }
+  },
+  jobSummary: function(){
+      return(mail_params);
   }
 };
