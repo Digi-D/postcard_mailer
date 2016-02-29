@@ -24,7 +24,7 @@ var sendPostcard = function (mail_description, mail_to, callback) {
   Lob.postcards.create({
       description: mail_description,
       to: mail_to,
-      front: fs.readFileSync('./media/LOB_template.png'),
+      front: fs.readFileSync('./media/the_international.png'),
       back: '<html style="padding-left:0.3in;padding-top:0.5in"><div style="font-size:0.3in">The International</div><div style="font-size:15px;padding-top:0.1in; padding-left:0.2in;font-family:sans-serif;">infinite.industries/the-international</div></html>',
     },
     function (err, res) {
