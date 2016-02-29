@@ -1,42 +1,50 @@
-{{#if params_valid}}<h3>Please confirm the following information before we begin sending the postcards</h3>
- <div class="row">
-   <div class="col-sm-6">
-      <ul>
-        <li>{{visitor_info.first_name}} {{visitor_info.last_name}}</li>
-        <li>{{visitor_info.address_1}}</li>
-        <li>{{visitor_info.email}}</li>
-        {{#hide_if_empty visitor_info.address_2}}<li>{{visitor_info.address_2}}</li>{{/hide_if_empty}}
-        <li>{{visitor_info.city}}</li>
-        <li>{{visitor_info.state}}</li>
-        <li>{{visitor_info.zip}}</li>
-        <li>{{visitor_info.number_of_cards}}</li>
-      </ul>
-  </div>
-  <div class="col-sm-6">
-      FINAL PRICE: ${{visitor_info.price}}.00
-      <button id="submitButton">Confirm and Send</button>
-  </div>
-</div>
+{{#if params_valid}}
 
-<div class="modal fade" id="connection_error" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Connection Problems</h4>
-        </div>
-        <div class="modal-body">
-          <p> hrrmmmm... :( Having issues connecting to our
-            servers. Please try again in a couple
-            of minutes. If you have any questions,
-            please reach out to us at info@infinite.industries.
-          </p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
+<div class="row">
+  <div class="col-sm-3 hidden-xs"> </div>
+  <div class="col-sm-6">
+    <div class="panel panel-primary panel-results">
+      <div class="panel-heading">
+        <h3 class="panel-title">Please confirm the following information before we begin sending the postcards</h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped">
+          <tr>
+            <td>Name</td>
+            <td>{{visitor_info.first_name}} {{visitor_info.last_name}}</td>
+          </tr>
+          <tr>
+            <td>Address</td>
+            <td>{{visitor_info.address_1}}</td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td>{{visitor_info.email}}</td>
+          </tr>
+          <tr>
+            <td>City</td>
+            <td>{{visitor_info.city}}</td>
+          </tr>
+          <tr>
+            <td>State</td>
+            <td>{{visitor_info.state}}</td>
+          </tr>
+          <tr>
+            <td>Zip</td>
+            <td>{{visitor_info.zip}}</td>
+          </tr>
+          <tr>
+            <td>Number of Cards</td>
+            <td>{{visitor_info.number_of_cards}}</td>
+          </tr>
+        </table>
+          <h3>FINAL PRICE: ${{visitor_info.price}}.00</h3>
+        <button class="btn btn-primary pull-right" id="submitButton">Confirm and Order</button>
+        <button type="reset" class="btn btn-default pull-right" id="cancelButton">Cancel</button>
       </div>
     </div>
+  </div>
+  <div class="col-sm-3 hidden-xs"> </div>
 </div>
 
 <script>
@@ -65,11 +73,13 @@
         },
         error: function(data) {
           //console.log("Connection Error");
-          $('#connection_error').modal('show');
-          console.log(data);
+          window.location.href = "/result?delivery_status=failed";
         }
       });
     }
+  });
+  $('#cancelButton').on('click', function(e) {
+    window.location.href = "/";
   });
 
   $('#submitButton').on('click', function(e) {

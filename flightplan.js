@@ -11,7 +11,7 @@ var tmpDir = appName+'-' + new Date().getTime();
 //no staging yet
 plan.target('staging', [
   {
-    host: config.staging_server_ip,
+    host: config.getGlobal('STAGING_SERVER_IP'),
     username: username,
     agent: process.env.SSH_AUTH_SOCK
   }
@@ -19,7 +19,7 @@ plan.target('staging', [
 
 plan.target('production', [
   {
-    host: config.production_server_ip,
+    host: config.getGlobal('PRODUCTION_SERVER_IP'),
     username: username,
     agent: process.env.SSH_AUTH_SOCK
   },

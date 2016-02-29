@@ -65,3 +65,7 @@
 .panel-results{
   margin-top: 20px;
 }
+
+#cancelButton{
+  margin-right: 10px;
+}

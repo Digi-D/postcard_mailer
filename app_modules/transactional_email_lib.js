@@ -3,8 +3,8 @@ module.exports = {
   mail_processed_success:{
     from: 'INFINITE.INDUSTRIES <info@infinite.industries>',
     to: ['test@infinite.industries'],
-    subject: 'Thank you for ordering the cards',
-    text: 'All card orders came through OK'
+    subject: 'Thank you for ordering the cards!',
+    text: 'Thank you for your order!'
   },
   mail_processed_succes_admin_update:{
     from: 'INFINITE.INDUSTRIES <info@infinite.industries>',

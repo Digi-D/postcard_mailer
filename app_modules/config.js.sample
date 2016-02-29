@@ -1,20 +1,40 @@
 //all configuration settings and keys
-module.exports =
-{
-  'TEST_LOB_KEY':'0',
-  'PROD_LOB_KEY':'0',
+var util = require('util');
 
-  'TEST_STRIPE_SECRET_KEY':'0',
-  'TEST_STRIPE_PUBLISHABLE_KEY':'0',
-  'PROD_STRIPE_SECRET_KEY':'0',
-  'PROD_STRIPE_PUBLISHABLE_KEY':'0',
+var mode = "TEST";
 
-  //MANDRILL KEYS
+var configs = {
+
+  //LOB SETTINGS
+  'TEST_LOB_KEY':'test_',
+  'LIVE_LOB_KEY':'live_',
+
+  //STRIPE SETTINGS
+  'TEST_STRIPE_SECRET_KEY':'sk_',
+  'TEST_STRIPE_PUBLISHABLE_KEY':'pk_',
+  'LIVE_STRIPE_SECRET_KEY':'sk_',
+  'LIVE_STRIPE_PUBLISHABLE_KEY':'pk_',
+
+  //MAILGUN SETTINGS
+  'LIVE_MAILGUN_API_KEY':'',
+  'LIVE_MAILGUN_DOMAIN':'mg.infinite.industries',
 
   //SERVER ADDRESSES
-  'production_server_ip':'0.0.0.0',
-  'staging_server_ip':'0.0.0.0',
-
+  'PRODUCTION_SERVER_IP':'',
+  'STAGING_SERVER':'0.0.0.0',
   //PRICE OF A SINGLE CARD
-  'PRICE_PER_CARD': 0.00    //dollar number
+  'PRICE_PER_CARD': 2.00    //dollar number
+}
+
+module.exports = {
+  setMode:function(update_mode){
+    mode = update_mode;
+  },
+  getKey:function(which_key){
+    var key = util.format('%s_%s',mode,which_key);
+    return(configs[key]);
+  },
+  getGlobal:function(which_config){
+    return(configs[which_config]);
+  }
 }

@@ -7,11 +7,6 @@ var hbars = require('express-handlebars');
 var bodyParser = require('body-parser');
 var uuid = require('uuid');
 
-var mailgun = require('mailgun.js');
-var emailLibrary = require('./app_modules/transactional_email_lib.js');
-var mg = mailgun.client({username: 'api', key: config.getGlobal('LIVE_MAILGUN_API_KEY')});
-var mail_domain = config.getGlobal('LIVE_MAILGUN_DOMAIN');
-
 var validate = require('./app_modules/validate_form.js');
 var mailPostcards = require('./app_modules/mail_postcards.js');
 var handlebarsHelpers = require('./app_modules/handlebars_helpers.js');
