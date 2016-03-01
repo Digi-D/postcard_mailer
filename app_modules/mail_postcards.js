@@ -60,7 +60,7 @@ module.exports = {
 
     var sender =  function(){
       async.retry(
-      {times: repeat, interval: 100},
+      {times: repeat, interval: 62000},
       function (callback, results) {
         sendPostcard(mail_params.description, mail_params.to, callback);
       },
@@ -75,10 +75,19 @@ module.exports = {
         else {
           counter++;
           sender();
+          // if(counter%20==0){
+          //   setTimeout(sender(),61000);     //take a breather if over 20 cards have been sent, gotta be nice to LOB's API
+          // }
+          // else{
+          //   setTimeout(sender(),10000);
+          // }
+          //REWRITE THIS BS!!!!!!!
+
         }
       })
     }
     sender();
+    //console.log("testMeOnce");
   },
   jobSummary: function(){
       return(mail_params);

@@ -22,8 +22,11 @@ var configs = {
   //SERVER ADDRESSES
   'PRODUCTION_SERVER_IP':'',
   'STAGING_SERVER':'0.0.0.0',
+  
   //PRICE OF A SINGLE CARD
-  'PRICE_PER_CARD': 2.00    //dollar number
+  'PRICE_PER_CARD': 2.00,    //dollar number
+
+  'ADMIN_EMAIL':'---'
 }
 
 module.exports = {

@@ -75,23 +75,25 @@ app.post('/finalize_payment', json_parser, function (req, res) {
     },function(err, charge) {
       if (err && err.type === 'StripeCardError') {
         // The card has been declined
+        res.end('{"status":"error"}');
       }
       else {
         console.log("Charge successfull begin sending cards.");
+        //return success and some vars to the front end
+        res.end('{"status":"success"}');
+        transactionalEmail.sendAdminEmail('CREDIT_CARD_CHARGED','admin_update', mailPostcards.jobSummary());
+
         mailPostcards.send(function(err, status, result){
            if(err){
             // WRITE TO LOG
             console.log(result);
             //email admin
-            transactionalEmail.sendAdminEmail('FAILED','admin_update', mailPostcards.jobSummary());
+            transactionalEmail.sendAdminEmail('POSTCARD_FAILED','admin_update', mailPostcards.jobSummary());
             //return error to the front end
-            res.end('{"status":"error"}');
            }
            else{
             //email admin
-            transactionalEmail.sendAdminEmail('SUCCESS','admin_update', mailPostcards.jobSummary());
-            //return success and some vars to the front end
-            res.end('{"status":"success","deliver":"'+result.expected_delivery_date+'"}');
+            transactionalEmail.sendAdminEmail('POSTCARD_SUCCESS','admin_update', mailPostcards.jobSummary());
            }
            //console.log(result.expected_delivery_date);
          });
@@ -103,14 +105,14 @@ app.post('/finalize_payment', json_parser, function (req, res) {
 app.get('/result', function (req, res) {
 //report result of the card charge and postcard send requests to the viewers
   if(req.query.delivery_status=="success"){
-    res.render( __dirname + "/views/" + "results", {delivery_status:true,delivery_date:req.query.delivery_date});
+    //res.render( __dirname + "/views/" + "results", {delivery_status:true,delivery_date:req.query.delivery_date});
+    res.render( __dirname + "/views/" + "results", {delivery_status:true});
   }
   else{
     res.render( __dirname + "/views/" + "results",{delivery_status:false});
   }
 
 })
-
 
 
 //SERVER SETUP
