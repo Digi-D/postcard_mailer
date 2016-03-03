@@ -5,6 +5,7 @@ var express = require('express');
 var hbars = require('express-handlebars');
 var bodyParser = require('body-parser');
 var uuid = require('uuid');
+var path = require('path');
 
 var validate = require('./app_modules/validate_form.js');
 var mailPostcards = require('./app_modules/mail_postcards.js');
@@ -16,15 +17,18 @@ var stripe = require("stripe")(config.getKey('STRIPE_SECRET_KEY'));
 var app = express();
 var json_parser = bodyParser.json();
 
-app.use(express.static('public')); //to serve out CSS and Javascript
-app.use(express.static('media')); //to serve out Image file for download
+console.log(__dirname);
+app.use(express.static(path.join(__dirname, 'public'))); //to serve out CSS and Javascript
+app.use(express.static(path.join(__dirname, 'media'))); //to serve out Image file for download
 
-console.log(app.settings.env);
+// console.log(app.settings.views);
+// var layouts_path = app.settings.views+"/layouts";
 
 app.engine('handlebars',
   hbars({
-    defaultLayout: 'container',
-    helpers:handlebarsHelpers
+    defaultLayout: 'container.handlebars',
+    helpers:handlebarsHelpers,
+    //layoutsDir:layouts_path,
   })
 );
 app.set('view engine', 'handlebars');
