@@ -46,12 +46,12 @@ app.get('/get_visitor_info', function (req, res) {
   var job_id=uuid.v1();
   var visitor_info = {
     id:job_id,
-    first_name:req.query.visitor_first_name,
-    last_name:req.query.visitor_last_name,
-    email:req.query.visitor_email,
-    address_1:req.query.visitor_address_1,
+    first_name:req.query.visitor_first_name.trim(),
+    last_name:req.query.visitor_last_name.trim(),
+    email:req.query.visitor_email.trim(),
+    address_1:req.query.visitor_address_1.trim(),
     //address_2:req.query.visitor_address_2,      // LOB throws and error here --> ?!!!
-    city:req.query.visitor_city,
+    city:req.query.visitor_city.trim(),
     state:req.query.visitor_state,
     zip:req.query.visitor_zip,
     number_of_cards:req.query.number_of_cards,
@@ -63,7 +63,7 @@ app.get('/get_visitor_info', function (req, res) {
 
   var stripe_key = config.getKey('STRIPE_PUBLISHABLE_KEY');
   validate.confirmationMessage(visitor_info, __dirname + "/views/" + "confirm", stripe_key, function(path, validation_report,validation_states){
-    //console.log(validation_report);   //send out validation report
+    console.log(validation_report);   //send out validation report
     res.render(path, validation_states);
   });
 
