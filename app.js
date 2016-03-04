@@ -85,19 +85,19 @@ app.post('/finalize_payment', json_parser, function (req, res) {
         console.log("Charge successfull begin sending cards.");
         //return success and some vars to the front end
         res.end('{"status":"success"}');
-        transactionalEmail.sendAdminEmail('CREDIT_CARD_CHARGED','admin_update', mailPostcards.jobSummary());
+        transactionalEmail.sendAdminEmail('CREDIT_CARD_CHARGED', config.getMode(),'admin_update', mailPostcards.jobSummary());
 
         mailPostcards.send(function(err, status, result){
            if(err){
             // WRITE TO LOG
             console.log(result);
             //email admin
-            transactionalEmail.sendAdminEmail('POSTCARD_FAILED','admin_update', mailPostcards.jobSummary());
+            transactionalEmail.sendAdminEmail('POSTCARD_FAILED', config.getMode(),'admin_update', mailPostcards.jobSummary());
             //return error to the front end
            }
            else{
             //email admin
-            transactionalEmail.sendAdminEmail('POSTCARD_SUCCESS','admin_update', mailPostcards.jobSummary());
+            transactionalEmail.sendAdminEmail('POSTCARD_SUCCESS', config.getMode(),'admin_update', mailPostcards.jobSummary());
            }
            //console.log(result.expected_delivery_date);
          });

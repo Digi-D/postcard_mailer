@@ -36,12 +36,12 @@ module.exports = {
   sendUserEmail:function(which_email, order_summary){
 
   },
-  sendAdminEmail:function(order_status, which_email, order_summary){
+  sendAdminEmail:function(order_status, which_mode, which_email, order_summary){
 
     var mail_content = email_templates[which_email];
 
     mail_content.to = [config.getGlobal('ADMIN_EMAIL')];
-    mail_content.subject = order_status+' Order '+order_summary.description;
+    mail_content.subject = which_mode+': '+order_status+' Order '+order_summary.description;
     mail_content.text = "Order Status:"+order_status+
       "\nJob Number: "+order_summary.description+
       "\nContact Email: "+order_summary.email+
