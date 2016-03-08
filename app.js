@@ -17,7 +17,7 @@ var stripe = require("stripe")(config.getKey('STRIPE_SECRET_KEY'));
 var app = express();
 var json_parser = bodyParser.json();
 
-console.log(__dirname);
+//console.log(__dirname);
 app.use(express.static(path.join(__dirname, 'public'))); //to serve out CSS and Javascript
 app.use(express.static(path.join(__dirname, 'media'))); //to serve out Image file for download
 
@@ -87,20 +87,20 @@ app.post('/finalize_payment', json_parser, function (req, res) {
         res.end('{"status":"success"}');
         transactionalEmail.sendAdminEmail('CREDIT_CARD_CHARGED', config.getMode(),'admin_update', mailPostcards.jobSummary());
 
-        mailPostcards.send(function(err, status, result){
-           if(err){
-            // WRITE TO LOG
-            console.log(result);
-            //email admin
-            transactionalEmail.sendAdminEmail('POSTCARD_FAILED', config.getMode(),'admin_update', mailPostcards.jobSummary());
-            //return error to the front end
-           }
-           else{
-            //email admin
-            transactionalEmail.sendAdminEmail('POSTCARD_SUCCESS', config.getMode(),'admin_update', mailPostcards.jobSummary());
-           }
-           //console.log(result.expected_delivery_date);
-         });
+        // mailPostcards.send(function(err, status, result){
+        //    if(err){
+        //     // WRITE TO LOG
+        //     console.log(result);
+        //     //email admin
+        //     transactionalEmail.sendAdminEmail('POSTCARD_FAILED', config.getMode(),'admin_update', mailPostcards.jobSummary());
+        //     //return error to the front end
+        //    }
+        //    else{
+        //     //email admin
+        //     transactionalEmail.sendAdminEmail('POSTCARD_SUCCESS', config.getMode(),'admin_update', mailPostcards.jobSummary());
+        //    }
+        //    //console.log(result.expected_delivery_date);
+        //  });
       }
     }
   );
