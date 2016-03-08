@@ -118,10 +118,12 @@ app.get('/result', function (req, res) {
 
 })
 
+app.get('*', function (req, res){
+  res.render( __dirname + "/views/" + 404);
+})
+
 
 //SERVER SETUP
 var server = app.listen(8081, function () {
-
   console.log("Shazam!")
-
 })

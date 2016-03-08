@@ -26,6 +26,10 @@
   .explanation{
     text-align: center;
   }
+
+  .page-top{
+    margin-top:20px;
+  }
 }
 
 @media only screen and (max-width: 767px) {
@@ -42,6 +46,10 @@
 
   .explanation{
     text-align: left;
+  }
+  .page-top{
+    margin-top:5px;
+    margin-bottom:5px;
   }
 }
 

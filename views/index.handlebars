@@ -1,3 +1,10 @@
+<div class="row text-center page-top">
+  <div class="col-lg-2 col-md-1 hidden-sm"> </div>
+  <div class="col-md-10 col-lg-8">
+    <img id="process_animation" src="images/process_animation.gif" width="600px" height="600px" />
+  </div>
+  <div class="col-lg-2 col-md-1 hidden-sm"> </div>
+</div>
 <div class="row">
   <div class="col-lg-2 col-md-1 hidden-sm"> </div>
   <div class="panel panel-default col-md-10 col-lg-8 directions">
@@ -164,6 +171,22 @@
     $('#number_of_cards').change(function() {
       calc_price($('#number_of_cards').val(),CARD_PRICE);
     });
+
+    var resizeImage = function(){
+      if($(window).width() < $('#process_animation').width()){
+        $('#process_animation').width($(window).width()-30).height($(window).width()-30);
+      }
+
+    }
+
+    $(window).resize(
+      function(){
+        resizeImage();
+      }
+    );
+
+    resizeImage();
+
 
   });
 </script>
