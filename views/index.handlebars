@@ -1,7 +1,20 @@
 <div class="row text-center page-top">
   <div class="col-lg-2 col-md-1 hidden-sm"> </div>
-  <div class="col-md-10 col-lg-8">
-    <img id="process_animation" src="images/process_animation.gif" width="600px" height="600px" />
+  <div class="col-md-10 col-lg-8 text-center" id="process_presentation">
+    <!--<img id="process_animation" src="images/process_animation.gif" width="600px" height="600px" /> -->
+
+    <div class="animation-container">
+      <h1 class="process-explained display-3" id="txt_slide_0">The International</h1>
+
+      <img class="process-explained" id="img_slide_1" style="top:0px;left:0px;" src="images/example_image.png" width="900px" height="800px">
+      <img class="process-explained" id="single_card" style="top:0px;left:0px;z-index:10;" src="images/single_card.png" width="395px" height="269px">
+
+      <h4 class="process-explained" id="txt_slide_1" style="top:0px;z-index:11;">
+        This image is created from a single card.
+      </h4>
+
+    </div>
+
   </div>
   <div class="col-lg-2 col-md-1 hidden-sm"> </div>
 </div>
@@ -23,7 +36,7 @@
 <div class="row text-right">
   <div class="col-lg-2 col-md-1 hidden-sm"> </div>
   <div class="col-md-10 col-lg-8">
-    <h2 class="project-title">The International: an <a href="http://infinite.industries"> infinite.industries</a> project</h2>
+    <h2 class="project-title"><em>Created by</em> <a href="http://infinite.industries">infinite.industries</a> <em>experiments in art distribution</em></h2>
   </div>
   <div class="col-lg-2 col-md-1 hidden-sm"> </div>
 </div>
@@ -154,6 +167,7 @@
 </div>
 
 <script>
+
   $(document).ready(function() {
     var number_of_cards= 10;
     var price = 0.00;
@@ -172,21 +186,7 @@
       calc_price($('#number_of_cards').val(),CARD_PRICE);
     });
 
-    var resizeImage = function(){
-      if($(window).width() < $('#process_animation').width()){
-        $('#process_animation').width($(window).width()-30).height($(window).width()-30);
-      }
-
-    }
-
-    $(window).resize(
-      function(){
-        resizeImage();
-      }
-    );
-
-    resizeImage();
-
-
   });
 </script>
+
+<script src="js/animation.js"></script>

@@ -77,3 +77,24 @@
 #cancelButton{
   margin-right: 10px;
 }
+
+h2 em {
+  font-size: 70%;
+}
+
+.animation-container{
+  position:relative;
+  height:300px;
+  background-color: black;
+}
+
+#process_presentation{
+  /*background-color: green;  */
+}
+
+.process-explained{
+  position:absolute;
+  width:100%;
+  text-emphasis: center;
+  visibility: hidden;
+}
