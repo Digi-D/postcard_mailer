@@ -15,7 +15,8 @@ process_timeline = new TimelineMax();
 
 var runAnimation = function(condition){
   if(condition=='restart'){
-    process_timeline.restart();
+    location.reload();
+    //process_timeline.restart();
   }
   else {
     process_timeline.to("#txt_slide_0",0.5,{autoAlpha:1})
@@ -24,8 +25,8 @@ var runAnimation = function(condition){
     .to("#img_slide_1",1,{autoAlpha:1},"image_fadein")
     .to("#single_card",1,{autoAlpha:1},"image_fadein")
 
-    .to("#img_slide_1",1.5,{autoAlpha:0},"image_fadein+=5.5")
-    .to("#txt_slide_1",1,{autoAlpha:1},"image_fadein+=5.5")
+    .to("#img_slide_1",1.5,{autoAlpha:0},"image_fadein+=3.0")
+    .to("#txt_slide_1",1,{autoAlpha:1},"image_fadein+=3.0")
 
     .to("#txt_slide_1",1,{top:(CONTAINER_HEIGHT/5)*4},"present_card")
     .to("#single_card",1,{
@@ -42,14 +43,18 @@ var runAnimation = function(condition){
     .to("#txt_slide_1",1,{opacity:1})
 
     .to("#txt_slide_1",1,{opacity:0},"+=2.0")
-    .set("#txt_slide_1", {text:"You can <a href='#orders'>order</a> cards here and follow the score below to create <em>The International</em>"})
-    .to("#txt_slide_1",1,{opacity:1});
+    .set("#txt_slide_1", {text:"You can <a href='#order_form'>order</a> cards here and follow the score below to create <em>The International</em>"},"buying_instructions")
 
-    console.log((CONTAINER_HEIGHT/5)*4);
+    .to("#txt_slide_1",1,{opacity:1})
+    .to("#single_card",1,{autoAlpha:0,},"buying_instructions+=3.0")
+    .to("#img_slide_1",1,{
+      autoAlpha:1,
+      scale:0.7,
+      y:-25
+    },"buying_instructions+=3.0");
+
   }
 }
-
-
 
 var resizeAnimationContainer = function(){
   // if($(window).width() < $('#process_animation').width()){
@@ -61,7 +66,7 @@ var resizeAnimationContainer = function(){
   CONTAINER_WIDTH = $('#process_presentation').width();
 
 
-  console.log(CONTAINER_WIDTH + " : " + CONTAINER_HEIGHT);
+  //console.log(CONTAINER_WIDTH + " : " + CONTAINER_HEIGHT);
 
   $('.animation-container').height(($('.animation-container').width()/6)*4);
   CONTAINER_HEIGHT = $('.animation-container').height();
@@ -102,8 +107,5 @@ resizeAnimationContainer();
 runAnimation('start');
 
 
-//fix media breakpoints
-//background for second image
+
 //shims for mobile
-//give subsections headers
-//how to retrigger

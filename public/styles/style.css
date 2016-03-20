@@ -1,6 +1,7 @@
-.directions{
+.score{
   color:#aaa;
-  font-family: "Lustri" , serif; font-weight: 400;
+  font-family: "Lustri" , serif;
+  font-weight: 400;
   letter-spacing: 1px;
   line-height: 110%;
 }
@@ -12,10 +13,20 @@
 }
 
 @media only screen and (min-width: 768px) {
-  .directions{
+  .score{
     font-size: 35px;
     margin-top: 20px;
     text-align: left;
+  }
+
+  #score_title{
+    color:#fff;
+    font-family: "Roboto" , sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: right;
   }
 
   .project-title{
@@ -30,13 +41,31 @@
   .page-top{
     margin-top:20px;
   }
+
+  h1{
+    font-size: 300%;
+  }
+
+  h4{
+    font-size: 200%;
+  }
+
 }
 
 @media only screen and (max-width: 767px) {
-  .directions{
+  .score{
     font-size: 28px;
-    margin-top: 0px;
+    margin-top: 20px;
     text-align: center;
+  }
+
+  #score_title{
+    color:#fff;
+    font-family: "Roboto" , sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    margin-top: 10px;
+    margin-bottom: 20px;
   }
 
   .project-title{
@@ -50,6 +79,14 @@
   .page-top{
     margin-top:5px;
     margin-bottom:5px;
+  }
+
+  h1{
+    font-size: 160%;
+  }
+
+  h4{
+    font-size: 120%;
   }
 }
 
@@ -88,7 +125,7 @@ h2 em {
   background-color: black;
 }
 
-#process_presentation{
+#process_presentation {
   /*background-color: green;  */
 }
 
@@ -97,4 +134,9 @@ h2 em {
   width:100%;
   text-emphasis: center;
   visibility: hidden;
+}
+
+#order_form{
+  margin-left: 20px;
+  margin-bottom: 20px;
 }
